@@ -31,10 +31,10 @@ scripts": {
 ##### Автопрефиксы с помощью PostCSS
 `npm install --save-dev postcss-cli autoprefixer`
 
- PostCSS, по умолчанию, ничего не делает. Он использует другие плагины, такие как Autoprefixer, для манипулирования предоставленным ему CSS.
+PostCSS, по умолчанию, ничего не делает. Он использует другие плагины, такие как Autoprefixer, для манипулирования предоставленным ему CSS.
 
- Добавим новую задачу в package.json:
- ```
+Добавим новую задачу в package.json:
+```
  "scripts": {
   "autoprefixer": "postcss -u autoprefixer -r build/css/*"
 }
@@ -64,6 +64,29 @@ scripts": {
 ```
 где mkdir - создать новый файл, но толькое если он не существует (-p).
 & - позволяет объединить несколько команд, параллельно выполняя каждую из них.
+
+uglify-js не поддерживает формат ES6, который по умолчанию может выдавать babel, поэтому лучше использовать uglify-es.
+`npm install --save-dev uglify-es`
+
+Чтобы минимизировать каталог целиком можно использовать uglifyjs-folder
+`npm install uglifyjs-folder --save-dev`
+
+Скрипт:
+```
+"uglifyjs": "uglifyjs-folder --config-file \"./uglify.config.json\" dist/js/ -eo dist/js-min",
+```
+где uglify.config.json это файл с конфигурацией для uglify-folder.
+```
+{
+  "compress": true,
+  "mangle": true,
+  "sourceMap": {
+    "includeSources": true,
+    "root": "dist/js-min",
+    "url": "{file}.map"
+  }
+}
+```
 
 ##### Объединение задач
 Добавим задачу, которая объединит задачи css.
@@ -101,8 +124,11 @@ npm i --save @babel/polyfill
   "build": "babel src --out-dir dist --source-maps inline"
 }
 ```
+Для генерации soureMap можно использовать не флаг, а указать настройку в файле .babelrc.json
+`"sourceMap": "inline"`
 
 ### Параллельное и последовательное выполнение задач
+
 На Windows мы не можем использовать & для параллельного выполнения. Вместо этого можно использовать npm-run-all (npm install --save-dev npm-run-all)
 `"series": "npm-run-all task1 task2 task3"`
 Также становится доступна команда для последовательного запуска:

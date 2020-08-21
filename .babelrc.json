@@ -15,5 +15,7 @@
         "useBuiltIns": "usage"
       }
     ]
-  ]
+  ],
+  "inputSourceMap": true,
+  "sourceMap": "inline"
 }
