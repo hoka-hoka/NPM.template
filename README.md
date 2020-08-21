@@ -1,4 +1,5 @@
 ### Содержание
+
 1. [Компиляция scss в css](#Компиляция-scss-в-css)
 2. [Автопрефиксы с помощью PostCSS](#Автопрефиксы-с-помощью-PostCSS)
 3. [BrowserSync](#BrowserSync)
@@ -6,7 +7,13 @@
 5. [Объединение задач](#Объединение-задач)
 6. [Наблюдатели](#Наблюдатели)
 
---save-dev - пакет попадает в devDependencies и используется только при разработке и не участвует при просмотре.
+npm home package - откроет оффициальную страницу пакета.
+npm repo package - git hub репозиторий пакета
+npm outdated - проверяет усаревшие пакеты
+npm prune - сравние package.json и node_modules
+
+"dependencies" - пакеты необходимые для работы приложения (--save-dev).
+"devDependencies" - пакеты необходимые только для локальной разработки и тестирования([--save-prod] или --production).
 
 ##### Компиляция scss в css:
 `npm install --save-dev node-sass`
@@ -27,8 +34,8 @@ scripts": {
  PostCSS, по умолчанию, ничего не делает. Он использует другие плагины, такие как Autoprefixer, для манипулирования предоставленным ему CSS.
 
  Добавим новую задачу в package.json:
- ```"
- scripts": {
+ ```
+ "scripts": {
   "autoprefixer": "postcss -u autoprefixer -r build/css/*"
 }
 ```
@@ -37,7 +44,7 @@ scripts": {
 -r - replace
 
 ##### BrowserSync
-`npm i -D browser-sync`
+`npm install --save-dev browser-sync`
 
 Подключение:
 ```
@@ -47,6 +54,7 @@ scripts": {
 ```
 
 ##### Uglifying файлы JavaScript
+Минимизирует js
 `npm install uglify-js -g`
 Подключение:
 ```
@@ -74,3 +82,29 @@ scripts": {
 
 `"watch:css": "onchange 'src/scss/*.scss' -- npm run build:css",`
 onchange ожидает путь в виде строки к файлу. Команда, которую мы хотим выполнить, идет после -- и запускается каждый раз, когда файлы по указанному пути добавляются, изменяются или удаляются
+
+##### Babel
+npm i --save-dev @babel/core @babel/cli @babel/node @babel/preset-env
+npm i --save @babel/polyfill
+
+1. @babel/core — непосредственно сам трансплайнер;
+2. @babel/cli— позволяет компилировать файлы с помощью командной строки для преобразования кода к версии языка ES5;
+3. @babel/node — утилита командной строки, которая работает также, как и Node cli, но дополнительно использует установленные babel-плагины и пресеты, прогоняя код через них перед запуском;
+4. @babel/preset-env открывает доступ к новым возможностям языка JavaScript
+5. @babel/polyfill - добавляет полифилы.
+
+Далее нужно создать конфигурационный файл для babel, в котором нужно подключить установленные ранее дополнительные зависимости, т.к. по умолчанию babel не будет работать с ними. Называется он .babelrc.
+
+Далее добавляются задачи
+```
+"scripts": { 
+  "build": "babel src --out-dir dist --source-maps inline"
+}
+```
+
+### Параллельное и последовательное выполнение задач
+На Windows мы не можем использовать & для параллельного выполнения. Вместо этого можно использовать npm-run-all (npm install --save-dev npm-run-all)
+`"series": "npm-run-all task1 task2 task3"`
+Также становится доступна команда для последовательного запуска:
+`"build": "run-s series list"`
+run-s
