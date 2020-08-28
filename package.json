@@ -5,16 +5,19 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "build:css": "run-s scss autoprefixer",
-    "scss": "node-sass --indent-type tab --output-style expanded src/sass/ -o dist/css/",
+    "build:css": "run-s scss",
+    "scss": "node-sass --indent-type tab --output-style expanded src/sass/ -o src/css/",
     "autoprefixer": "postcss -u autoprefixer -r dist/css/*",
+    "deploy": "autoprefixer uglifyjs",
+
     "uglifyjs": "uglifyjs-folder --config-file \"./uglify.config.json\" dist/js/ -eo dist/js-min",
-    "babel": "babel src/js --out-dir dist/js",
-    "build:js": "run-s compile babel uglifyjs",
-    "serve": "browser-sync start --server --files 'dist/css/*.css, dist/js/*.js'",
+    "babel": "babel src/js --out-dir src/js",
+    "build:js": "run-s compile babel",
+    "serve": "browser-sync start --server --files 'src/css/*.css, src/js/*.js'",
+
     "build:watch": "onchange \"src/sass/*.scss\" -- npm run build:css",
     "list": "npm-run-all build:css build:js",
-    "build": "run-s list serve"
+    "build": "run-s list serve build:watch"
   },
   "author": "",
   "license": "ISC",
