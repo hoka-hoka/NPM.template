@@ -6,6 +6,7 @@
 4. [Uglifying файлы JavaScript](#Uglifying-файлы-JavaScript)
 5. [Объединение задач](#Объединение-задач)
 6. [Наблюдатели](#Наблюдатели)
+7. [Обновление package.json](#Обновление-package.json)
 
 npm home package - откроет оффициальную страницу пакета.
 npm repo package - git hub репозиторий пакета
@@ -124,19 +125,25 @@ npm i --save @babel/polyfill
   "build": "babel src --out-dir dist --source-maps inline"
 }
 ```
-Для генерации soureMap можно использовать не флаг, а указать настройку в файле .babelrc.json
+Для генерации soureMap можно использовать не флаг, а указать настройку в файле .babelrc.json  
 `"sourceMap": "inline"`
 
 ### Параллельное и последовательное выполнение задач
 
-На Windows мы не можем использовать & для параллельного выполнения. Вместо этого можно использовать npm-run-all (npm install --save-dev npm-run-all)
-
+На Windows мы не можем использовать & для параллельного выполнения. Вместо этого можно использовать npm-run-all (npm install --save-dev npm-run-all)  
 `"series": "npm-run-all task1 task2 task3"`
 
-Также становится доступна команда для последовательного запуска:
-
+Также становится доступна команда для последовательного запуска:  
 `"build": "run-s series list"`
 
-и параллельного:
-
+и параллельного:  
 `"build": "run-p series list"`
+
+### Обновление package.json
+
+```
+npm install -g npm-check-updates
+ncu --timeout 120000000
+ncu -u --timeout 120000000 
+npm install
+```
