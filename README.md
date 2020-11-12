@@ -158,5 +158,6 @@ nvm list available // показать доступные версии Node
 nvm list // показать установленные версии Node
 nvm install 4.2.2 // установить одну из них
 nvm use 4.2.2 // переключиться
+nvm uninstall 15.0.0 // удалить
 ```
 
