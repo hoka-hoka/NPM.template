@@ -160,8 +160,16 @@ nvm install 4.2.2 // установить одну из них
 nvm use 4.2.2 // переключиться
 nvm uninstall 15.0.0 // удалить
 ```
-### Обновить NPM
-``` npm update ```
+### Обновить NPM и пакеты
+Посмотреть глобальные пакеты
+```
+npm list -g -depth=0
+```
+Обновить пакет глобально
+```
+npm update -g @angular/cli
+```
+``` npm update npm -g ```
 Если npm установлена вместе с node, то:
 ```
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
