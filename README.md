@@ -160,6 +160,14 @@ nvm install 4.2.2 // установить одну из них
 nvm use 4.2.2 // переключиться
 nvm uninstall 15.0.0 // удалить
 ```
+### Обновить NPM
+``` npm update ```
+Если npm установлена вместе с node, то:
+```
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+npm install -g npm-windows-upgrade
+npm-windows-upgrade
+```
 
 ### Возможные ошибки
 
